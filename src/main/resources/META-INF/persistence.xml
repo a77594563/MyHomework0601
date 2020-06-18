@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+    <!-- Standard -->
+    <persistence-unit name="p1" transaction-type="RESOURCE_LOCAL">
+        <!-- reg entity -->
+        <class>com.web.mvc.entity.one2one.Person</class>
+        <class>com.web.mvc.entity.one2one.Husband</class>
+        <class>com.web.mvc.entity.one2one.Wife</class>
+        <class>com.web.mvc.entity.one2many.Car</class>
+        <class>com.web.mvc.entity.one2many.Driver</class>
+        <class>com.web.mvc.entity.one2many.Price</class>
+        <class>com.web.mvc.entity.many2many.Stock</class>
+        <class>com.web.mvc.entity.many2many.Fund</class>
+        
+        <class>com.web.portfolio.entity.Classify</class>
+        <class>com.web.portfolio.entity.Investor</class>
+        <class>com.web.portfolio.entity.Portfolio</class>
+        <class>com.web.portfolio.entity.TStock</class>
+        <class>com.web.portfolio.entity.Watch</class>
+        
+        <properties>
+            <!-- 
+              預設情況下，對象關係映射不會自動發生，但是您可以配置應用程序服務器以使用
+              openjpa.jdbc.SynchronizeMappings屬性提供該映射。 
+              此屬性可以通過自動確保數據庫表與對像模型匹配來加速開發。
+            -->
+            <property name="jdbc.SynchronizeMappings" value="buildSchema (ForeignKeys=true)"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/database"/>
+            <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
+            <property name="javax.persistence.jdbc.user" value="app"/>
+            <property name="javax.persistence.jdbc.password" value="app"/>
+            <property name="openjpa.Log" value="SQL=Trace" />
+        </properties>
+    </persistence-unit>
+  
+</persistence>

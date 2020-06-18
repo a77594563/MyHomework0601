@@ -42,7 +42,7 @@ public class Investor implements Serializable{
     @JsonIgnoreProperties("investor")
     private Set<Portfolio> portfolios;
     
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "watch", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "investor", fetch = FetchType.EAGER)
     @JsonIgnoreProperties("investor")
     private Set<Watch> watchs;
 
