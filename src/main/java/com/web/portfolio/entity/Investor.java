@@ -24,7 +24,7 @@ public class Investor implements Serializable{
     private String email;
     
     @Column
-    private String userName;
+    private String username;
     
     @Column
     private String password;
@@ -51,7 +51,7 @@ public class Investor implements Serializable{
 
     public Investor(String userName, String password, String email,  Integer balance) {
         this.email = email;
-        this.userName = userName;
+        this.username = userName;
         this.password = password;
         this.balance = balance;
     }
@@ -73,13 +73,15 @@ public class Investor implements Serializable{
         this.email = email;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
+
+
 
     public String getPassword() {
         return password;
@@ -131,7 +133,7 @@ public class Investor implements Serializable{
 
     @Override
     public String toString() {
-        return "Investor{" + "id=" + id + ", email=" + email + ", userName=" + userName + ", password=" + password + ", balance=" + balance + ", code=" + code + ", pass=" + pass + '}';
+        return "Investor{" + "id=" + id + ", email=" + email + ", username=" + username + ", password=" + password + ", balance=" + balance + ", code=" + code + ", pass=" + pass + '}';
     }
     
 }
