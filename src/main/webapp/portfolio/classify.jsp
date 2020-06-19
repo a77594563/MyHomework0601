@@ -2,20 +2,18 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>我的投資組合<投資者管理></title>
+        <title>我的投資組合<商品分類></title>
         <%@include file="/WEB-INF/jsp/include/head.jspf" %>
         <script>
             $(document).ready(function () {
                 $("#myTable").on("click", "tr", function () {
                     var id = $(this).find('td').eq(0).text().trim();
                     console.log(id);
-                    $.get("/MyHomework/mvc/portfolio/investor/" + id, function (data, status) {
+                    $.get("/MyHomework/mvc/portfolio/classify/" + id, function (data, status) {
                         console.log(JSON.stringify(data));
                         $('#myform').find('#id').val(data.id);
-                        $('#myform').find('#username').val(data.username);
-                        $("#myform").find("#password").val(data.password);
-                        $("#myform").find("#email").val(data.email);
-                        $("#myform").find("#balance").val(data.balance);
+                        $('#myform').find('#name').val(data.name);
+                        $("#myform").find("#transaction").val(data.transaction);
                     });
                 });
                 
@@ -23,7 +21,7 @@
                     var jsonObj = $("#myform").serializeObject()
                     var jsonStr = JSON.stringify(jsonObj);
                     $.ajax({
-                        url: "/MyHomework/mvc/portfolio/investor/",
+                        url: "/MyHomework/mvc/portfolio/classify/",
                         type: "POST",
                         contentType: "application/json; charset=utf-8",
                         data: jsonStr,
@@ -41,7 +39,7 @@
                     var jsonObj = $("#myform").serializeObject();
                     var jsonStr = JSON.stringify(jsonObj);
                     $.ajax({
-                        url: "/MyHomework/mvc/portfolio/investor/" + jsonObj.id,
+                        url: "/MyHomework/mvc/portfolio/classify/" + jsonObj.id,
                         type: "PUT",
                         contentType: "application/json; charset=utf-8",
                         data: jsonStr,
@@ -58,7 +56,7 @@
                 $("#del").on("click", function(){
                     var id = $("#myform").find("#id").val();
                     $.ajax({
-                        url: "/MyHomework/mvc/portfolio/investor/" + id,
+                        url: "/MyHomework/mvc/portfolio/classify/" + id,
                         type: "DELETE",
                         async: true,
                         cache: false,
@@ -74,19 +72,15 @@
             });
 
             function table_list() {
-                $.get("/MyHomework/mvc/portfolio/investor/", function (datas, status) {
+                $.get("/MyHomework/mvc/portfolio/classify/", function (datas, status) {
                     console.log("Datas: " + datas);
                     $("#myTable tbody > tr").remove();
                     $.each(datas, function (i, item) {
-                        var html = '<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td><td>{6}</td></tr>';
+                        var html = '<tr><td>{0}</td><td>{1}</td><td>{2}</td></tr>';
                         $('#myTable').append(String.format(html,
                                 item.id,
-                                item.username,
-                                item.password,
-                                item.email,
-                                item.balance,
-                                item.code,
-                                item.pass
+                                item.name,
+                                item.transaction,
                                 ));
                     });
                 });
@@ -103,8 +97,8 @@
 
             <div id="main">
                 <div class="header">
-                    <h1>Investor</h1>
-                    <h2>投資人</h2>
+                    <h1>Classify</h1>
+                    <h2>商品分類</h2>
                 </div>
 
                 <table>
@@ -115,10 +109,8 @@
                                     <legend> <h2 class="content-subhead">資料維護</h2> </legend>
 
                                     <input id="id" name="id" placeholder="ID" readonly="true"/><p />
-                                    <input id="username" name="username" placeholder="username"/><p />
-                                    <input id="password" name="password" placeholder="password"/><p />
-                                    <input id="email" name="email" placeholder="email"/><p />
-                                    <input id="balance" name="balance" placeholder="balance" type="number"/><p />
+                                    <input id="name" name="name" placeholder="分類名稱"/><p />
+                                    <input id="transaction" name="transaction" type="checkbox"/> Transaction<p />
 
                                     <button id="add" type="button" class="pure-button pure-button-primary">新增</button>
                                     <button id="upt" type="button" class="pure-button pure-button-primary">修改</button>
@@ -137,12 +129,8 @@
                                         <thead>
                                             <tr>
                                                 <th>id</th>
-                                                <th>username</th>
-                                                <th>password</th>
-                                                <th>email</th>
-                                                <th>balance</th>
-                                                <th>code</th>
-                                                <th>pass</th>
+                                                <th>name</th>
+                                                <th>transaction</th>
                                             </tr>
                                         </thead>
                                         <tbody>
