@@ -4,9 +4,13 @@
     <head>
         <title>我的投資組合<觀察股></title>
         <%@include file="/WEB-INF/jsp/include/head.jspf" %>
-        <!-- <script>
+        
+        <script>
+            var watch_id = ${sessionScope.watch_id};
+            var watch = null;
+            
             $(document).ready(function () {
-                $("#myTable").on("click", "tr", function () {
+                /*$("#myTable").on("click", "tr", function () {
                     var id = $(this).find('td').eq(0).text().trim();
                     console.log(id);
                     $.get("/MyHomework/mvc/portfolio/investor/" + id, function (data, status) {
@@ -18,8 +22,8 @@
                         $("#myform").find("#balance").val(data.balance);
                     });
                 });
-                
-                $("#add").on("click", function(){
+
+                $("#add").on("click", function () {
                     var jsonObj = $("#myform").serializeObject()
                     var jsonStr = JSON.stringify(jsonObj);
                     $.ajax({
@@ -36,8 +40,8 @@
                         }
                     });
                 });
-                
-                $("#upt").on("click", function(){
+
+                $("#upt").on("click", function () {
                     var jsonObj = $("#myform").serializeObject();
                     var jsonStr = JSON.stringify(jsonObj);
                     $.ajax({
@@ -53,9 +57,9 @@
                         }
                     });
                 });
-                
-                
-                $("#del").on("click", function(){
+
+
+                $("#del").on("click", function () {
                     var id = $("#myform").find("#id").val();
                     $.ajax({
                         url: "/MyHomework/mvc/portfolio/investor/" + id,
@@ -67,31 +71,58 @@
                             table_list();
                         }
                     });
-                });
-                
+                });*/
+
                 // 資料列表
                 table_list();
             });
 
             function table_list() {
-                $.get("/MyHomework/mvc/portfolio/investor/", function (datas, status) {
-                    console.log("Datas: " + datas);
+                $.get("/MyHomework/mvc/portfolio/watch/" + watch_id, function (datas, status) {
+                    console.log(JSON.stringify(data));
+                    $("#myform").find("#id").val(datas.id);
+                    $("#myform").find("#name").val(datas.name);
+                    watch = datas; // 設定 watch 變數資料
+                    
                     $("#myTable tbody > tr").remove();
-                    $.each(datas, function (i, item) {
-                        var html = '<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td><td>{6}</td></tr>';
+                    $.each(watch.tStocks, function (i, item) {
+                        var html = '<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td tstock_id="{4}">{5}</td></tr>';
+                        delbtn_html = '<button type="button" class="pure-button pure-button-primary">刪除</button>';
                         $('#myTable').append(String.format(html,
                                 item.id,
-                                item.username,
-                                item.password,
-                                item.email,
-                                item.balance,
-                                item.code,
-                                item.pass
+                                item.name,
+                                item.symbol,
+                                item.classify.name,
+                                item.id,
+                                delbtn_html
                                 ));
                     });
                 });
             }
-        </script> -->
+            
+            function table_list2() {
+                $.get("/MyHomework/mvc/portfolio/tstock/" + watch_id, function (datas, status) {
+                    console.log("Datas: " + datas);
+                    $("#myform").find("#id").val(datas.id);
+                    $("#myform").find("#name").val(datas.name);
+                    watch = datas; // 設定 watch 變數資料
+                    
+                    $("#myTable tbody > tr").remove();
+                    $.each(watch.tStocks, function (i, item) {
+                        var html = '<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td tstock_id="{4}">{5}</td></tr>';
+                        delbtn_html = '<button type="button" class="pure-button pure-button-primary">刪除</button>';
+                        $('#myTable').append(String.format(html,
+                                item.id,
+                                item.name,
+                                item.symbol,
+                                item.classify.name,
+                                item.id,
+                                delbtn_html
+                                ));
+                    });
+                });
+            }
+        </script> 
     </head>
     <body>
         <div id="layout">

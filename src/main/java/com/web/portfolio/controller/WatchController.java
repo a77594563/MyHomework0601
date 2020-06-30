@@ -36,7 +36,7 @@ public class WatchController {
         return list;
     }
     
-    @GetMapping(value = {"/[{id}", "/get/{id}"})
+    @GetMapping(value = {"/{id}", "/get/{id}"})
     @Transactional
     public Watch get(@PathVariable("id") Long id){
         Watch watch = em.find(Watch.class, id);
