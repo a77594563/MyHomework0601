@@ -45,6 +45,7 @@ public class WatchController {
     }
     
     @PutMapping(value = {"/{id}", "/update/{id}"})
+    @Transactional
     public Boolean update(@PathVariable("id") Long id, @RequestBody Map<String, String> map){
         Watch o_watch = get(id);
         if (o_watch == null) {

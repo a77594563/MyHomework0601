@@ -53,7 +53,7 @@ public class TStock implements Serializable{
     public TStock() {
     }
 
-    public TStock(String name, String symbol, Classify classify) {
+    public TStock(String symbol, String name, Classify classify) {
         this.name = name;
         this.symbol = symbol;
         this.classify = classify;

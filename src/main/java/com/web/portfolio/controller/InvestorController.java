@@ -58,8 +58,6 @@ public class InvestorController {
         investor.setPassword(map.get("password"));
         investor.setEmail(map.get("email"));
         investor.setBalance(Integer.parseInt(map.get("balance")));
-        investor.setCode(Integer.toHexString(investor.hashCode()));
-        investor.setPass(Boolean.FALSE);
         Watch watch = new Watch("我的投資組合", investor);
 
         em.persist(investor);

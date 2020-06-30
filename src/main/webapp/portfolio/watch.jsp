@@ -4,48 +4,18 @@
     <head>
         <title>我的投資組合<觀察股></title>
         <%@include file="/WEB-INF/jsp/include/head.jspf" %>
-        
+
         <script>
             var watch_id = ${sessionScope.watch_id};
             var watch = null;
-            
-            $(document).ready(function () {
-                /*$("#myTable").on("click", "tr", function () {
-                    var id = $(this).find('td').eq(0).text().trim();
-                    console.log(id);
-                    $.get("/MyHomework/mvc/portfolio/investor/" + id, function (data, status) {
-                        console.log(JSON.stringify(data));
-                        $('#myform').find('#id').val(data.id);
-                        $('#myform').find('#username').val(data.username);
-                        $("#myform").find("#password").val(data.password);
-                        $("#myform").find("#email").val(data.email);
-                        $("#myform").find("#balance").val(data.balance);
-                    });
-                });
 
-                $("#add").on("click", function () {
-                    var jsonObj = $("#myform").serializeObject()
-                    var jsonStr = JSON.stringify(jsonObj);
-                    $.ajax({
-                        url: "/MyHomework/mvc/portfolio/investor/",
-                        type: "POST",
-                        contentType: "application/json; charset=utf-8",
-                        data: jsonStr,
-                        async: true,
-                        cache: false,
-                        processData: false,
-                        success: function (resposeJsonObject) {
-                            //alert(JSON.stringify(resposeJsonObject));
-                            table_list();
-                        }
-                    });
-                });
+            $(document).ready(function () {
 
                 $("#upt").on("click", function () {
                     var jsonObj = $("#myform").serializeObject();
                     var jsonStr = JSON.stringify(jsonObj);
                     $.ajax({
-                        url: "/MyHomework/mvc/portfolio/investor/" + jsonObj.id,
+                        url: "/MyHomework/mvc/portfolio/watch/" + watch_id,
                         type: "PUT",
                         contentType: "application/json; charset=utf-8",
                         data: jsonStr,
@@ -59,34 +29,70 @@
                 });
 
 
-                $("#del").on("click", function () {
-                    var id = $("#myform").find("#id").val();
-                    $.ajax({
-                        url: "/MyHomework/mvc/portfolio/investor/" + id,
-                        type: "DELETE",
-                        async: true,
-                        cache: false,
-                        processData: false,
-                        success: function (resposeJsonObject) {
-                            table_list();
-                        }
-                    });
-                });*/
+                $("#myTable").on("click", "tr td:nth-child(5)", function () {
+                    var tstock_id = $(this).attr("tstock_id");
+                    var tstock_name = $(this).attr("tstock_name");
+                    var tstock_symbol = $(this).attr("tstock_symbol");
+                    
+                    console.log("tstock_id: " + tstock_id);
+                    console.log("tstock_name: " + tstock_name);
+                    console.log("tstock_symbol: " + tstock_symbol);
+                    
+                    if (confirm("是否刪除?" + tstock_name + " " +tstock_symbol)) {
+                        $.ajax({
+                            url: "/MyHomework/mvc/portfolio/watch/" + watch_id + "/remove/" + tstock_id,
+                            type: "DELETE",
+                            async: true,
+                            cache: false,
+                            processData: false,
+                            success: function (resposeJsonObject) {
+                                table_list();
+                            }
+                        });
+                    }
+                });
+
+                $("#myTable2").on("click", "tr td:nth-child(5)", function () {
+                    var tstock_id = $(this).attr("tstock_id");
+                    var flag = true;
+                    if (watch != null && watch.tStocks != null) {
+                        $.each(watch.tStocks, function (i, item) {
+                            if (item.id == tstock_id) {
+                                alert(item.name + ' ' + item.symbol + ' 已加入!');
+                                flag = false;
+                                return;
+                            }
+                        });
+                    }
+                    if (flag && confirm("是否新增?")) {
+                        $.ajax({
+                            url: "/MyHomework/mvc/portfolio/watch/" + watch_id + "/add/" + tstock_id,
+                            type: "GET",
+                            async: true,
+                            cache: false,
+                            processData: false,
+                            success: function (resposeJsonObject) {
+                                table_list();
+                            }
+                        });
+                    }
+                });
 
                 // 資料列表
                 table_list();
+                table_list2();
             });
 
             function table_list() {
                 $.get("/MyHomework/mvc/portfolio/watch/" + watch_id, function (datas, status) {
-                    console.log(JSON.stringify(data));
+                    console.log(JSON.stringify(datas));
                     $("#myform").find("#id").val(datas.id);
                     $("#myform").find("#name").val(datas.name);
                     watch = datas; // 設定 watch 變數資料
-                    
+
                     $("#myTable tbody > tr").remove();
                     $.each(watch.tStocks, function (i, item) {
-                        var html = '<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td tstock_id="{4}">{5}</td></tr>';
+                        var html = '<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td tstock_id="{4}" tstock_name="{5}" tstock_symbol="{6}">{7}</td></tr>';
                         delbtn_html = '<button type="button" class="pure-button pure-button-primary">刪除</button>';
                         $('#myTable').append(String.format(html,
                                 item.id,
@@ -94,30 +100,31 @@
                                 item.symbol,
                                 item.classify.name,
                                 item.id,
+                                item.name,
+                                item.symbol,
                                 delbtn_html
                                 ));
                     });
                 });
             }
-            
+
             function table_list2() {
-                $.get("/MyHomework/mvc/portfolio/tstock/" + watch_id, function (datas, status) {
+                $.get("/MyHomework/mvc/portfolio/tstock/", function (datas, status) {
                     console.log("Datas: " + datas);
-                    $("#myform").find("#id").val(datas.id);
-                    $("#myform").find("#name").val(datas.name);
-                    watch = datas; // 設定 watch 變數資料
-                    
-                    $("#myTable tbody > tr").remove();
-                    $.each(watch.tStocks, function (i, item) {
-                        var html = '<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td tstock_id="{4}">{5}</td></tr>';
-                        delbtn_html = '<button type="button" class="pure-button pure-button-primary">刪除</button>';
-                        $('#myTable').append(String.format(html,
+
+                    $("#myTable2 tbody > tr").remove();
+                    $.each(datas, function (i, item) {
+                        var html = '<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td tstock_id="{4}" tstock_name="{5}" tstock_symbol="{6}">{7}</td></tr>';
+                        addbtn_html = '<button type="button" class="pure-button pure-button-primary">新增</button>';
+                        $('#myTable2').append(String.format(html,
                                 item.id,
                                 item.name,
                                 item.symbol,
                                 item.classify.name,
                                 item.id,
-                                delbtn_html
+                                item.name,
+                                item.symbol,
+                                addbtn_html
                                 ));
                     });
                 });
