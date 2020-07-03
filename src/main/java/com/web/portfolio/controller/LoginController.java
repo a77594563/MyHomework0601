@@ -5,10 +5,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 登入控制
@@ -38,6 +40,7 @@ public class LoginController {
             if (investor != null && investor.getPassword().equals(password)) {
                 session.setAttribute("investor", investor);
                 session.setAttribute("watch_id", investor.getWatchs().iterator().next().getId());
+                
                 if (referer.contains("login.jsp")) {
                     return "redirect:/portfolio/index.jsp";
                 }

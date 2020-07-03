@@ -78,4 +78,10 @@
         }
         return x1 + x2;
     }
+    // 取得股價
+    function get_price() {
+        $.get("/MyHomework/mvc/portfolio/price/refresh", function (datas, status) {
+            console.log("Datas: " + datas);
+        });
+    }
 </script>

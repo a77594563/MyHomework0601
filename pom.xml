@@ -229,7 +229,6 @@
             </plugin>
         </plugins>
     </build>
-
     <pluginRepositories>
         <pluginRepository>
             <id>central</id>

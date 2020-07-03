@@ -6,6 +6,9 @@
         <%@include file="/WEB-INF/jsp/include/head.jspf" %>
         <script>
             $(document).ready(function () {
+                // 取得股價
+                get_price();
+                
                 $("#myTable").on("click", "tr", function () {
                     var id = $(this).find('td').eq(0).text().trim();
                     console.log(id);
@@ -74,6 +77,8 @@
                 
                 // 資料列表
                 table_list();
+                
+                
             });
             
             function classify_list(){
@@ -101,12 +106,13 @@
                                 item.changeInPercent,
                                 item.preClosed,
                                 item.price,
-                                item.transactionDate,
+                                getYMDHMS(item.transactionDate),
                                 item.volumn
                                 ));
                     });
                 });
             }
+            
         </script>
     </head>
     <body>

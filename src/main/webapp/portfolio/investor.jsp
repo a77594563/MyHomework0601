@@ -78,15 +78,13 @@
                     console.log("Datas: " + datas);
                     $("#myTable tbody > tr").remove();
                     $.each(datas, function (i, item) {
-                        var html = '<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td><td>{6}</td></tr>';
+                        var html = '<tr><td>{0}</td><td>{1}</td><td>{2}</td><td>{3}</td><td>{4}</td></tr>';
                         $('#myTable').append(String.format(html,
                                 item.id,
                                 item.username,
                                 item.password,
                                 item.email,
                                 item.balance,
-                                item.code,
-                                item.pass
                                 ));
                     });
                 });
@@ -141,8 +139,6 @@
                                                 <th>password</th>
                                                 <th>email</th>
                                                 <th>balance</th>
-                                                <th>code</th>
-                                                <th>pass</th>
                                             </tr>
                                         </thead>
                                         <tbody>

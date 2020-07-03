@@ -59,7 +59,7 @@ public class TStockController {
     @PutMapping(value = {"/{id}", "/update/{id}"})
     @Transactional
     public Boolean update(@PathVariable("id") Long id, @RequestBody Map<String, String> map){
-        TStock o_TStock = get(id);
+        TStock o_TStock = em.find(TStock.class, id);
         if (o_TStock == null) {
             return false;
         }
@@ -75,12 +75,12 @@ public class TStockController {
         return true;
     }
     
-    @DeleteMapping(value = {"/{id"})
+    @DeleteMapping(value = {"/{id}", "/delete/{id}"})
     @Transactional
     public Boolean delete(@PathVariable("id") Long id){
-        em.refresh(get(id));
-        em.flush();
-        
-        return get(id) == null ? true : false;
+        TStock tStock = em.find(TStock.class, id);
+        em.remove(tStock);    
+        return true;
+
     }
 }
