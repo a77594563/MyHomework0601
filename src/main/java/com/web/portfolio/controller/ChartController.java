@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 資產配置
  * @author user
  */
+
 @RestController
 @RequestMapping("/portfolio/chart")
 public class ChartController {
@@ -21,7 +22,7 @@ public class ChartController {
     protected EntityManager em;
     
     @GetMapping(value = {"/asset/{id}"})
-    public List asset(@PathVariable("id") Long id){
+    public List asset(@PathVariable("id") Long id) {
         String sql = "SELECT c.name, SUM(p.amount * s.price) as subtotal "
                    + "FROM Classify c, Portfolio p, TStock s "
                    + "WHERE p.investor.id=:id AND p.tStock.id = s.id AND s.classify.id = c.id "
@@ -34,7 +35,7 @@ public class ChartController {
     }
     
     @GetMapping(value = {"/profit/{id}"})
-    public List profit(@PathVariable("id") Long id){
+    public List profit(@PathVariable("id") Long id) {
         String sql = "SELECT c.name, SUM(p.amount * (s.price-p.cost)) as subtotal "
                    + "FROM Classify c, Portfolio p, TStock s "
                    + "WHERE p.investor.id=:id AND p.tStock.id = s.id AND s.classify.id = c.id "
@@ -45,5 +46,5 @@ public class ChartController {
         System.out.println(list);
         return list;
     }
-            
+    
 }

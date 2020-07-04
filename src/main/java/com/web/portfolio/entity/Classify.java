@@ -19,7 +19,7 @@ public class Classify implements Serializable{
     private Long id;
     
     @Column
-    private String Name;
+    private String name;
     
     @Column
     private Boolean transaction;
@@ -32,10 +32,12 @@ public class Classify implements Serializable{
     public Classify() {
     }
 
-    public Classify(String Name, Boolean transaction) {
-        this.Name = Name;
+    public Classify(String name, Boolean transaction) {
+        this.name = name;
         this.transaction = transaction;
     }
+
+
 
     public Long getId() {
         return id;
@@ -46,11 +48,11 @@ public class Classify implements Serializable{
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
-    public void setName(String Name) {
-        this.Name = Name;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Boolean getTransaction() {
@@ -71,7 +73,7 @@ public class Classify implements Serializable{
 
     @Override
     public String toString() {
-        return "Classify{" + "id=" + id + ", Name=" + Name + ", transaction=" + transaction + '}';
+        return "Classify{" + "id=" + id + ", name=" + name + ", transaction=" + transaction + '}';
     }
-    
+
 }

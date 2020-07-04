@@ -78,10 +78,10 @@
                 $.get("/MyHomework/mvc/portfolio/investor/" + investor_id, function (data, status) {
                     console.log(JSON.stringify(data));
                     $("#balance").text(numberFormat(data.balance));
-                    table_list(data.portfolio);
+                    table_list(data.portfolios);
                 });
             }
-
+            
             // asset 列表
             function table_list(datas) {
                 $("#myTable tbody > tr").remove();
@@ -89,7 +89,7 @@
                 var profit_sum = 0;
                 var total_html = '<tr><td colspan="7" align="right">total</td><td nowrap="nowrap">{0}</td><td colspan="3"> </td></tr>';
                 sortJson(datas, 'id', true);
-                $.each(datas.tStocks, function (i, item) {
+                $.each(datas, function (i, item) {
                     var html = '<tr>' +
                             '<td nowrap="nowrap"               >{0}</td><td nowrap="nowrap"              >{1}</td><td nowrap="nowrap"              >{2}</td>' +
                             '<td nowrap="nowrap"               >{3}</td><td nowrap="nowrap" align="right">{4}</td><td nowrap="nowrap" align="right">{5}</td>' +
@@ -104,7 +104,7 @@
                     buybtn_html = '<button type="button" class="pure-button pure-button-primary">加碼</button>';
                     $('#myTable').append(String.format(html,
                             item.id,
-                            item.classify.name,
+                            item.tStock.classify.name,
                             item.tStock.symbol,
                             item.tStock.name,
                             item.tStock.price,

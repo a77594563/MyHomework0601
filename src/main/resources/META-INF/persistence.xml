@@ -3,15 +3,6 @@
     <!-- Standard -->
     <persistence-unit name="p1" transaction-type="RESOURCE_LOCAL">
         <!-- reg entity -->
-        <class>com.web.mvc.entity.one2one.Person</class>
-        <class>com.web.mvc.entity.one2one.Husband</class>
-        <class>com.web.mvc.entity.one2one.Wife</class>
-        <class>com.web.mvc.entity.one2many.Car</class>
-        <class>com.web.mvc.entity.one2many.Driver</class>
-        <class>com.web.mvc.entity.one2many.Price</class>
-        <class>com.web.mvc.entity.many2many.Stock</class>
-        <class>com.web.mvc.entity.many2many.Fund</class>
-        
         <class>com.web.portfolio.entity.Classify</class>
         <class>com.web.portfolio.entity.Investor</class>
         <class>com.web.portfolio.entity.Portfolio</class>

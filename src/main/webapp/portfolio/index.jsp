@@ -19,7 +19,7 @@
                     <h2>Portfolio Tables</h2>
                 </div>
                 
-                <img src="/SpringMVC/portfolio/images/portfolio.png" width="100%">
+                <img src="/MyHomework/portfolio/images/portfolio.png" width="100%">
                 
             </div>
         </div>
